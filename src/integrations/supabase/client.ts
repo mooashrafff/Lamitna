@@ -3,16 +3,30 @@ import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
 // To use another Supabase project (not yours): set these in .env to that project's URL and anon key.
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+// In Vercel: Project → Settings → Environment Variables (VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "";
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "";
 
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
+// Use placeholder if env vars missing so the app always loads; set env and redeploy for real auth/DB.
+const url = SUPABASE_URL || "https://placeholder.supabase.co";
+const key = SUPABASE_PUBLISHABLE_KEY || "placeholder";
+if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  console.warn("[Lamitna] Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY. Add them in Vercel → Project → Settings → Environment Variables, then redeploy.");
+}
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
-  }
-});
+let supabaseInstance: ReturnType<typeof createClient<Database>>;
+try {
+  supabaseInstance = createClient<Database>(url, key, {
+    auth: {
+      storage: localStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+    }
+  });
+} catch (e) {
+  console.error("[Lamitna] Supabase client init failed:", e);
+  supabaseInstance = createClient<Database>("https://placeholder.supabase.co", "placeholder", {
+    auth: { storage: localStorage, persistSession: true, autoRefreshToken: true }
+  });
+}
+export const supabase = supabaseInstance;
