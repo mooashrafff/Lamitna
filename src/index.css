@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 60% 12%;
+    --foreground: 45 90% 92%;
+
+    --card: 240 50% 16%;
+    --card-foreground: 45 90% 92%;
+
+    --popover: 240 50% 16%;
+    --popover-foreground: 45 90% 92%;
+
+    --primary: 45 85% 55%;
+    --primary-foreground: 240 60% 12%;
+
+    --secondary: 0 70% 45%;
+    --secondary-foreground: 45 90% 92%;
+
+    --muted: 240 40% 20%;
+    --muted-foreground: 240 20% 60%;
+
+    --accent: 150 55% 35%;
+    --accent-foreground: 45 90% 92%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 30% 25%;
+    --input: 240 30% 25%;
+    --ring: 45 85% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 240 60% 10%;
+    --sidebar-foreground: 45 90% 92%;
+    --sidebar-primary: 45 85% 55%;
+    --sidebar-primary-foreground: 240 60% 12%;
+    --sidebar-accent: 0 70% 45%;
+    --sidebar-accent-foreground: 45 90% 92%;
+    --sidebar-border: 240 30% 25%;
+    --sidebar-ring: 45 85% 55%;
+
+    /* Khayma custom tokens */
+    --gold: 45 85% 60%;
+    --gold-dim: 45 55% 38%;
+    --khayma-red: 0 70% 45%;
+    --khayma-blue: 240 60% 30%;
+    --khayma-green: 150 55% 30%;
+    --star: 45 90% 80%;
+
+    font-family: 'Inter', sans-serif;
+  }
+
+  .dark {
+    --background: 240 60% 12%;
+    --foreground: 45 90% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Lantern animation */
+@keyframes lantern-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes lantern-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pattern-scroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+.animate-lantern-sway {
+  animation: lantern-sway 4s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-lantern-glow {
+  animation: lantern-glow 3s ease-in-out infinite;
+}
+
+.animate-star-twinkle {
+  animation: star-twinkle 3s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up 0.8s ease-out forwards;
+}
+
+/* Khayma gradient backgrounds */
+.bg-khayma-gradient {
+  background: linear-gradient(
+    180deg,
+    hsl(240, 60%, 10%) 0%,
+    hsl(240, 55%, 14%) 30%,
+    hsl(0, 50%, 18%) 70%,
+    hsl(240, 60%, 10%) 100%
+  );
+}
+
+.bg-khayma-radial {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    hsl(240, 50%, 22%) 0%,
+    hsl(240, 55%, 14%) 40%,
+    hsl(240, 60%, 10%) 100%
+  );
+}
+
+/* Khayma decorative border pattern */
+.khayma-border-top {
+  position: relative;
+}
+.khayma-border-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    hsl(0, 70%, 45%) 0px,
+    hsl(0, 70%, 45%) 20px,
+    hsl(45, 85%, 55%) 20px,
+    hsl(45, 85%, 55%) 25px,
+    hsl(150, 55%, 35%) 25px,
+    hsl(150, 55%, 35%) 45px,
+    hsl(45, 85%, 55%) 45px,
+    hsl(45, 85%, 55%) 50px
+  );
+}
+
+.khayma-border-bottom {
+  position: relative;
+}
+.khayma-border-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    hsl(0, 70%, 45%) 0px,
+    hsl(0, 70%, 45%) 20px,
+    hsl(45, 85%, 55%) 20px,
+    hsl(45, 85%, 55%) 25px,
+    hsl(150, 55%, 35%) 25px,
+    hsl(150, 55%, 35%) 45px,
+    hsl(45, 85%, 55%) 45px,
+    hsl(45, 85%, 55%) 50px
+  );
+}
+
+/* Pave strip under cards (ground effect) */
+.khayma-pave {
+  height: 12px;
+  width: 100%;
+  border-radius: 0 0 6px 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    hsl(0, 70%, 45%) 0px,
+    hsl(0, 70%, 45%) 20px,
+    hsl(45, 85%, 55%) 20px,
+    hsl(45, 85%, 55%) 25px,
+    hsl(150, 55%, 35%) 25px,
+    hsl(150, 55%, 35%) 45px,
+    hsl(45, 85%, 55%) 45px,
+    hsl(45, 85%, 55%) 50px
+  );
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, hsl(45, 85%, 70%), hsl(45, 65%, 45%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Logo: blend so black background disappears on dark theme */
+.logo-brand {
+  mix-blend-mode: lighten;
+}
+
+/* Khayma pattern overlay */
+.khayma-pattern {
+  position: relative;
+}
+.khayma-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: 
+    radial-gradient(circle at 25% 25%, hsl(0, 70%, 50%) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, hsl(150, 55%, 40%) 2px, transparent 2px),
+    radial-gradient(circle at 50% 50%, hsl(45, 85%, 55%) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 30px 30px;
+  pointer-events: none;
+}
