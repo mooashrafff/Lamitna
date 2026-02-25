@@ -63,6 +63,17 @@ To connect the app to a **different** Supabase project (e.g. a teammate's or ano
 
 Sign-in and events will then use that Supabase project.
 
+## Verify Supabase Connection
+
+To verify that your application can successfully connect to Supabase:
+
+1. Ensure your `.env` file contains the correct `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`.
+2. Run the verification script:
+   ```sh
+   npm run verify-connection
+   ```
+3. If the connection is successful, you will see a success message. If not, check your credentials in `.env`.
+
 ## What technologies are used for this project?
 
 This project is built with:
