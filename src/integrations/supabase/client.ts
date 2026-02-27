@@ -2,37 +2,16 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-// To use another Supabase project (not yours): set these in .env to that project's URL and anon key.
-// In Vercel: Project → Settings → Environment Variables (VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY)
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "";
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "";
+// IMPORTANT: Use your Supabase project's URL + anon (public) key here.
+// This avoids any mismatch between local .env and Vercel env and guarantees
+// every request includes a valid `apikey` header.
+const SUPABASE_URL = "https://rrxsevbgtprbtfakidqe.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_e5udXFWl7w_gMFH_ezq-pg_Fx8KvzWd";
 
-// Hard-coded safe defaults for this template's demo project so that even if
-// env vars are missing in Vercel, the client still has a valid anon key.
-// Replace these with your own project values if you fork the project.
-const FALLBACK_SUPABASE_URL = "https://rrxsevbgtprbtfakidqe.supabase.co";
-const FALLBACK_SUPABASE_KEY = "sb_publishable_e5udXFWl7w_gMFH_ezq-pg_Fx8KvzWd";
-
-// Prefer env vars; fall back to known demo project.
-const url = SUPABASE_URL || FALLBACK_SUPABASE_URL;
-const key = SUPABASE_PUBLISHABLE_KEY || FALLBACK_SUPABASE_KEY;
-if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-  console.warn("[Lamitna] Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY. Add them in Vercel → Project → Settings → Environment Variables, then redeploy.");
-}
-
-let supabaseInstance: ReturnType<typeof createClient<Database>>;
-try {
-  supabaseInstance = createClient<Database>(url, key, {
-    auth: {
-      storage: localStorage,
-      persistSession: true,
-      autoRefreshToken: true,
-    }
-  });
-} catch (e) {
-  console.error("[Lamitna] Supabase client init failed:", e);
-  supabaseInstance = createClient<Database>("https://placeholder.supabase.co", "placeholder", {
-    auth: { storage: localStorage, persistSession: true, autoRefreshToken: true }
-  });
-}
-export const supabase = supabaseInstance;
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: {
+    storage: localStorage,
+    persistSession: true,
+    autoRefreshToken: true,
+  }
+});
